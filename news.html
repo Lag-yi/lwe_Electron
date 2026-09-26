@@ -127,7 +127,20 @@
         .log-title { font-size: 1.4rem; font-weight: 600; margin: 0.5rem 0 1rem; color: var(--text-primary); }
         .log-content { color: var(--text-secondary); line-height: 1.7; }
         .log-content p { margin-bottom: 0.8rem; }
-
+        .log-content .log-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.8rem;
+        }
+        .log-content .log-tags .tag-sm {
+            background: rgba(124, 58, 237, 0.15);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
         .light-theme .log-date {
             background: #e9ecef;
             color: #2c3e50;
@@ -136,6 +149,11 @@
         .light-theme .log-entry { background: #ffffff; border-color: #e2e8f0; }
         .light-theme .month-list a:hover {
             background-color: rgba(90, 103, 216, 0.1);
+        }
+        .light-theme .log-content .log-tags .tag-sm {
+            background: rgba(90, 103, 216, 0.1);
+            color: #5a67d8;
+            border-color: rgba(90, 103, 216, 0.2);
         }
 
         .back-home {
@@ -201,6 +219,7 @@
                         <span class="year-text">2026年</span>
                     </div>
                     <ul class="month-list" data-year="2026">
+                        <li><a href="#" data-year="2026" data-month="8">8月</a></li>
                         <li><a href="#" data-year="2026" data-month="5">5月</a></li>
                         <li><a href="#" data-year="2026" data-month="4">4月</a></li>
                         <li><a href="#" data-year="2026" data-month="3">3月</a></li>
@@ -212,6 +231,37 @@
         </aside>
 
         <main class="log-list" id="logList">
+            <!-- 8月9日 -->
+            <div class="log-entry">
+                <div class="log-date">2026.08.09</div>
+                <div class="log-title">🔧 海渊叉戟枪定型 · 武器系统重构</div>
+                <div class="log-content">
+                    <p>海渊叉戟枪正式定型为继承 <code>SwordItem</code> 的武器，使用原生 <code>Item.Properties.sword()</code> 注册方式。伤害设定为 22 点，攻击速度 1.6（原版剑手感）。</p>
+                    <p>创建了自定义工具材料 <code>Seasoul_Tier</code>，使用「海魂锭」作为修复材料。</p>
+                    <p>解决了物品 ID 缺失导致的 <code>NullPointerException</code>，统一了物品注册流程。</p>
+                    <div class="log-tags">
+                        <span class="tag-sm">#武器系统</span>
+                        <span class="tag-sm">#SwordItem</span>
+                        <span class="tag-sm">#修复材料</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 8月8日 -->
+            <div class="log-entry">
+                <div class="log-date">2026.08.08</div>
+                <div class="log-title">⬆️ 升级到 1.21.11 · 原生注册方式</div>
+                <div class="log-content">
+                    <p>将模组从 1.21.1 升级到 1.21.11，放弃 <code>FabricItemSettings</code>，改用原生 <code>Item.Properties</code> 注册物品。</p>
+                    <p>创建了统一的 <code>ModRegistries.registerItem</code> 方法，在注册时自动调用 <code>.setId(key)</code>，消除了 <code>NullPointerException</code>。</p>
+                    <p>在 <code>assets/longtravelchronicle/items/</code> 目录下为每个物品创建了客户端物品定义文件，符合 1.21.4+ 的新资源格式要求。</p>
+                    <div class="log-tags">
+                        <span class="tag-sm">#1.21.11</span>
+                        <span class="tag-sm">#原生注册</span>
+                        <span class="tag-sm">#资源格式</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 5月2日 -->
             <div class="log-entry">
                 <div class="log-date">2026.05.02</div>
                 <div class="log-title">🚀 模组重构与更名：长旅行纪</div>

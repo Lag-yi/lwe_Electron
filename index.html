@@ -11,6 +11,36 @@
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
     <style>
         html { scroll-behavior: smooth; }
+        .log-entry .log-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.8rem;
+        }
+        .log-entry .log-tags .tag-sm {
+            background: rgba(124, 58, 237, 0.15);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        .light-theme .log-entry .log-tags .tag-sm {
+            background: rgba(90, 103, 216, 0.1);
+            color: #5a67d8;
+            border-color: rgba(90, 103, 216, 0.2);
+        }
+        .update-card, .credit-card {
+            cursor: default;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .update-card:hover, .credit-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px -8px rgba(0,0,0,0.4);
+        }
+        .light-theme .update-card:hover, .light-theme .credit-card:hover {
+            box-shadow: 0 15px 25px -8px rgba(0,0,0,0.15);
+        }
     </style>
     <link rel="icon" type="image/png" href="/images/icon.png">
 </head>
@@ -48,44 +78,45 @@
             <div class="mod-card">
                 <div class="mod-info">
                     <h3>长旅行纪 (Long Travel Chronicle)</h3>
-                    <p style="margin-top: 1.5rem;"><strong>已重构并更名，代码更清晰，功能更稳定。</strong></p>
+                    <p style="margin-top: 1.5rem;"><strong>已升级到 Minecraft 1.21.11，使用官方映射，武器系统重构中。</strong></p>
                     <ul>
-                        <li>基于 Fabric 1.21.1，使用 Mojang 官方映射</li>
-                        <li>自定义物品：海魂锭、战神徽章、圣化盐、水晶瓶等</li>
+                        <li>基于 Fabric 1.21.11 + 官方 Mojang 映射</li>
+                        <li>自定义物品：海魂锭、战神徽章、圣化盐、水晶瓶、调试杖</li>
+                        <li>自定义武器：<strong>海渊叉戟枪</strong>（继承 SwordItem，22 点伤害）</li>
                         <li>自定义合成配方与创造模式物品栏</li>
                         <li>战神徽章替死效果（13种增益 + 隐身）</li>
-                        <li>盔甲系统框架（海魂盔甲开发中）</li>
-                        <li>统一物品注册方式，代码结构优化</li>
+                        <li>使用官方物品注册方式，代码结构清晰</li>
+                        <li>自定义工具材料（海魂锭修复）</li>
                     </ul>
-                    <p><strong>正在学：</strong> 自定义盔甲完整实现、给物品添加特殊逻辑（右键火球等）</p>
-                    <p><strong>还不会的：</strong> 还有很多……但我们在前进！</p>
+                    <p><strong>正在学：</strong> 原版「矛」的冲锋机制、Mixin 原理、复杂武器系统设计</p>
+                    <p><strong>下一步计划：</strong> 实现海渊叉戟枪的右键投掷/抓钩/拉回机制</p>
                     <div class="mod-tags">
-                        <span class="tag">#1.21.1</span>
-                        <span class="tag">#重构</span>
+                        <span class="tag">#1.21.11</span>
                         <span class="tag">#Fabric</span>
                         <span class="tag">#Java</span>
+                        <span class="tag">#SwordItem</span>
+                        <span class="tag">#武器系统</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 最新动态 -->
     <section id="updates" class="updates-section">
         <div class="container">
             <h2 class="section-title">📝 最新动态</h2>
             <div class="updates-grid">
                 <div class="update-card">
+                    <div class="update-date">2026.08.09</div>
+                    <p class="update-desc">海渊叉戟枪正式定型：左键普攻 22 伤害，继承 SwordItem，使用海魂锭修复。</p>
+                </div>
+                <div class="update-card">
+                    <div class="update-date">2026.08.08</div>
+                    <p class="update-desc">模组升级到 1.21.11，统一使用原生物品注册方式，武器系统重构中。</p>
+                </div>
+                <div class="update-card">
                     <div class="update-date">2026.05.02</div>
                     <p class="update-desc">模组正式更名为「长旅行纪」，代码全面重构，项目结构优化。</p>
-                </div>
-                <div class="update-card">
-                    <div class="update-date">2026.04.12</div>
-                    <p class="update-desc">更换为 Mojang 官方映射，统一物品注册方式，代码可读性提升。</p>
-                </div>
-                <div class="update-card">
-                    <div class="update-date">2026.04.04</div>
-                    <p class="update-desc">添加圣化盐和水晶瓶及其配方。</p>
                 </div>
             </div>
             <div style="text-align: center; margin-top: 1rem;">
@@ -96,11 +127,22 @@
         </div>
     </section>
 
-    <!-- 代码片段分享 -->
     <section id="code" class="code-section">
         <div class="container">
             <h2 class="section-title">🧩 代码片段</h2>
             <div class="code-card">
+                <p class="code-title">海渊叉戟枪 · 武器注册（原生方式）</p>
+                <pre><code>// ModItems.java —— 使用 ModRegistries.registerItem
+public static final Item ABYSSAL_TRIDENT_SPEAR = ModRegistries.registerItem(
+    "abyssal_trident_spear",
+    AbyssalTridentSpearItem::new,
+    new Item.Properties()
+        .sword(Seasoul_Tier.SEASOUL_INGOT, 0f, -2.4f)
+        .stacksTo(1)
+);</code></pre>
+                <p class="code-note">武器继承 SwordItem，使用自定义材料「海魂锭」修复</p>
+            </div>
+            <div class="code-card" style="margin-top: 1.5rem;">
                 <p class="code-title">战神徽章效果（替死 + 13种增益）</p>
                 <pre><code>public static void register() {
     ServerLivingEntityEvents.ALLOW_DEATH.register((entity, source, amount) -> {
@@ -115,7 +157,6 @@
             player.setHealth(1.0F);
             player.removeAllEffects();
             int duration = 800;
-            // 添加13种增益效果（省略具体代码）
             player.level().playSound(null, player.blockPosition(),
                     SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
             if (mainHand.is(ModItems.WARGOD_EMBLEM)) {
@@ -133,7 +174,6 @@
         </div>
     </section>
 
-    <!-- 关于我们 -->
     <section id="credits" class="credits-section">
         <div class="container">
             <h2 class="section-title">👤 关于我们</h2>
@@ -142,7 +182,7 @@
                     <i class="fas fa-user-graduate fa-2x" style="color: #5a67d8;"></i>
                     <h4>Starry_Electricity</h4>
                     <p class="credit-role">写代码 + 少量策划/美术</p>
-                    <span class="credit-desc">七年级，负责 Java、Git、被 bug 折磨、喜欢神学类物品。</span>
+                    <span class="credit-desc">八年级，负责 Java、Git、被 bug 折磨、喜欢神学类物品。</span>
                     <span class="credit-desc">负责部分美术（纹理、图标）</span>
                     <span class="credit-desc">这个网站就是她做的</span>
                 </div>
@@ -151,7 +191,7 @@
                     <i class="fas fa-paint-brush fa-2x" style="color: #5a67d8;"></i>
                     <h4>LWE_awa</h4>
                     <p class="credit-role">画图 + 想点子</p>
-                    <span class="credit-desc">七年级，负责画纹理、想配方和各种物品</span>
+                    <span class="credit-desc">八年级，负责画纹理、想配方和各种物品</span>
                 </div>
 
                 <div class="credit-card">
@@ -191,8 +231,8 @@
                     <i class="fas fa-balance-scale"></i> 网站声明
                 </button>
                 <div id="legalNotice" class="legal-notice" style="display: none;">
-                    <p><strong>© 版权</strong>：原创内容（文字、代码）版权归 LWE_Electron 所有。Minecraft 相关素材版权归 Mojang Studios。</p>
-                    <p><strong>免责</strong>：本网站为个人学习项目，信息仅供参考。如有侵权，请联系我们处理。</p>
+                    <p><strong>© 版权</strong>：本网站及模组的原创内容（文字、代码、原创纹理等）版权归 LWE_Electron 项目及其成员所有。Minecraft 相关素材版权归 Mojang Studios，我们不对其主张权利。</p>
+                    <p><strong>免责</strong>：本网站为个人学习项目，与 Mojang Studios 和 Microsoft Corporation 无官方关联。信息仅供参考，如有侵权请联系我们处理。</p>
                     <p><a href="legal.html" target="_blank">查看完整声明 <i class="fas fa-external-link-alt"></i></a></p>
                 </div>
             </div>
@@ -200,7 +240,6 @@
     </footer>
 
     <script>
-        // 主题切换
         const themeToggle = document.getElementById('themeToggle');
         const icon = themeToggle.querySelector('i');
         
@@ -224,7 +263,6 @@
             }
         });
 
-        // 手机菜单触发器
         const logo = document.querySelector('.logo');
         const navLinks = document.getElementById('navLinks');
 
@@ -245,7 +283,6 @@
             });
         });
 
-        // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
@@ -261,7 +298,6 @@
             });
         });
 
-        // 声明折叠
         window.toggleLegalNotice = function() {
             var notice = document.getElementById('legalNotice');
             notice.style.display = notice.style.display === 'none' ? 'block' : 'none';
